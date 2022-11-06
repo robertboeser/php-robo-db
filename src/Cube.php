@@ -8,6 +8,7 @@ class Cube {
 
     function __construct($table='', $cols=[], $data=[]) {
         $this->table = $table;
+        $this->cols = $cols;
         $this->data = $data;
     }
 

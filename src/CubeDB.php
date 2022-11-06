@@ -68,7 +68,8 @@ class CubeDB {
 
     function fetchTableCols($table) {
         if(empty($this->table_cols[$table])) {
-            $this->table_cols[$table] = $this->repository->fetchTableCols($table);
+            $cols = $this->repository->fetchTableCols($table);
+            $this->table_cols[$table] = $cols;
         }
         return $this->table_cols[$table];
     }

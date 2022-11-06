@@ -41,8 +41,9 @@ class Adapter {
     protected function connect() {
         $props = parse_url($this->dsn);
         // mysql:host=localhost;dbname=database
+        $path = trim($props['path'], '/');
 
-        $dsn = "{$props['scheme']}:host={$props['host']};dbname={$props['path']}";
+        $dsn = "{$props['scheme']}:host={$props['host']};dbname=$path";
         $usr = $props['user'];
         $pwd = $props['pass'];
         if($this->usr) $usr = $this->usr;

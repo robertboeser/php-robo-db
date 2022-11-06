@@ -9,15 +9,15 @@ class QueryWriter {
     }
 
     function select($where = '') {
-        if(!$where) return "SELECT * FROM {$this->tbl}";
-        return "SELECT * FROM {$this->tbl} WHERE $where";
+        if(!$where) return "SELECT * FROM `{$this->tbl}`";
+        return "SELECT * FROM `{$this->tbl}` WHERE $where";
     }
 
     function insert($keys) {
         $vals = array_fill(0, count($keys), '?');
         $cols = implode(',', $keys);
         $vals = implode(',', $vals);
-        return "INSERT INTO {$this->tbl} ($cols) VALUES ($vals)";
+        return "INSERT INTO `{$this->tbl}` ($cols) VALUES ($vals)";
     }
 
     function update($keys) {
@@ -28,11 +28,11 @@ class QueryWriter {
         }
         $set = implode(',', $set);
 
-        return "UPDATE {$this->tbl} SET $set WHERE id = ?";
+        return "UPDATE `{$this->tbl}` SET $set WHERE id = ?";
     }
 
     function delete() {
-        return "DELETE FROM {$this->tbl} WHERE id = ?";
+        return "DELETE FROM `{$this->tbl}` WHERE id = ?";
     }
 
     function tables() {
@@ -40,7 +40,7 @@ class QueryWriter {
     }
 
     function columns() {
-        return "SHOW COLUMNS FROM {$this->tbl}";
+        return "SHOW COLUMNS FROM `{$this->tbl}`";
     }
 
 /*

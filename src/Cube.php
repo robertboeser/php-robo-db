@@ -28,15 +28,23 @@ class Cube {
         return $this->table;
     }
 
-    function __set($name, $value) {
+    function set($name, $value) {
         if(!in_array($name, $this->cols)) return false;
         $this->data[$name] = $value;
         return true;
     }
 
-    function __get($name) {
+    function get($name) {
         if(!in_array($name, $this->cols)) return null;
         if(!isset($this->data[$name])) return null;
         return $this->data[$name];
+    }
+
+    function __set($name, $value) {
+        return $this->set($name, $value);
+    }
+
+    function __get($name) {
+        return $this->get($name);
     }
 }

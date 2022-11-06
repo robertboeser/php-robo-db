@@ -1,0 +1,16 @@
+{
+    "name": "robertboeser/robo-db",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Robert Böser",
+            "email": "code@robertboeser.de"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.0",
+        "robertboeser/robo-id": "^1.0"
+    }
+}

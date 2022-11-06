@@ -10,12 +10,12 @@ class CubeDB {
         $this->repository = $repo;
     }
 
-    function setup($dsn, $usr='', $pwd='', $opts=null) {
-        if(is_object($dsn)) {
-            $this->repository->setAdapter($dsn);
+    function setup($cfg) {
+        if(is_object($cfg)) {
+            $this->repository->setAdapter($cfg);
         } else {
             $adapter = new Adapter();
-            $adapter->setup($dsn, $usr, $pwd, $opts);
+            $adapter->setup($cfg);
             $this->repository->setAdapter($adapter);
         }
         $this->repository->setDefaults();

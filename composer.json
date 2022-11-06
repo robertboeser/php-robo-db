@@ -13,6 +13,9 @@
         "php": "^8.0",
         "robertboeser/robo-id": "^1.0"
     },
+    "suggest": {
+        "robmorgan/phinx": "Simplifies database migration"
+    },
     "autoload": {
         "psr-4": {
             "Robo\\RoboDB\\": "src/"

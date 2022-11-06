@@ -1,7 +1,7 @@
 <?php
-namespace Robo\RoboCube;
+namespace Robo\RoboDB;
 
-class CubeEntity {
+class Cube {
     protected $data = [];
     protected $cols = [];
     protected $table = '';

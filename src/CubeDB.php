@@ -1,5 +1,5 @@
 <?php
-namespace Robo\RoboCube;
+namespace Robo\RoboDB;
 
 class CubeDB {
     protected $repository;
@@ -39,7 +39,7 @@ class CubeDB {
 
     function newCube($table, $data=[]) {
         $cols = $this->fetchTableCols($table);
-        return new CubeEntity($table, $cols, $data);
+        return new Cube($table, $cols, $data);
     }
 
     function addCube($cube, $migrate=false) {

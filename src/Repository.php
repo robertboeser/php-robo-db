@@ -1,5 +1,5 @@
 <?php
-namespace Robo\RoboCube;
+namespace Robo\RoboDB;
 
 use Robo\RoboID\RoboB32 as RoboID;
 

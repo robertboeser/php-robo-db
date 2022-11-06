@@ -12,5 +12,10 @@
     "require": {
         "php": "^8.0",
         "robertboeser/robo-id": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Robo\\RoboDB\\": "src/"
+        }
     }
 }

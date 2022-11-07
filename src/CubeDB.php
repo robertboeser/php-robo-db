@@ -43,14 +43,14 @@ class CubeDB {
     }
 
     function addCube($cube) {
-        $id = $this->repository->add($cube->getTable(), $cube->getData(), $migrate);
+        $id = $this->repository->add($cube->getTable(), $cube->getData());
         if(!$id) return false;
         $cube->id = $id;
         return $id;
     }
 
     function updCube($cube) {
-        return $this->repository->upd($cube->getTable(), $cube->getData(), $migrate);
+        return $this->repository->upd($cube->getTable(), $cube->getData());
     }
 
     function delCube($cube) {

@@ -1,7 +1,9 @@
 <?php
 namespace Robo\RoboDB;
 
-class Cube {
+use JsonSerializable;
+
+class Cube implements JsonSerializable {
     protected $data = [];
     protected $cols = [];
     protected $table = '';
@@ -46,5 +48,9 @@ class Cube {
 
     function __get($name) {
         return $this->get($name);
+    }
+
+    function jsonSerialize() {
+        return $this->data;
     }
 }

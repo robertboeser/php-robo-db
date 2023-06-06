@@ -8,14 +8,19 @@ class Cube implements JsonSerializable {
     protected $cols = [];
     protected $table = '';
 
+    protected function to_arr($data) {
+        if(is_array($data)) return $data;
+        return json_decode(json_encode($data), true);
+    }
+
     function __construct($table='', $cols=[], $data=[]) {
         $this->table = $table;
-        $this->cols = $cols;
-        $this->data = $data;
+        $this->cols = $this->to_arr($cols);
+        $this->data = $this->to_arr($data);
     }
 
     function setData($data) {
-        $this->data = $data;
+        $this->data = $this->to_arr($data);
     }
 
     function getData() {

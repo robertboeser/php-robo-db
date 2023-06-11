@@ -7,6 +7,7 @@ class Cube implements JsonSerializable {
     protected $data = [];
     protected $cols = [];
     protected $table = '';
+    protected $serializeTimezone = [];
 
     protected function to_arr($data) {
         if(is_array($data)) return $data;
@@ -72,7 +73,12 @@ class Cube implements JsonSerializable {
     }
 
     function jsonSerialize() {
-        return $this->data;
+        if(!$this->serializeTimezone) return $this->data;
+        return $this->serializeDateTimeZone($this->serializeTimezone);
+    }
+
+    function setSerializeTimezone($names) {
+        $this->serializeTimezone = $names;
     }
 
     function serializeDateTimeZone($names) {
@@ -80,7 +86,7 @@ class Cube implements JsonSerializable {
         foreach($names as $name) {
             $key = array_search($name, $this->cols);
             if(false === $key) continue;
-            $copy[$key] .= 'Z';
+            if(!empty($copy[$key])) $copy[$key] .= 'Z';
         }
         return $copy;
     }

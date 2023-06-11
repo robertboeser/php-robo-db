@@ -1,6 +1,7 @@
 <?php
 namespace Robo\RoboDB;
 
+use DateTimeImmutable;
 use JsonSerializable;
 
 class Cube implements JsonSerializable {

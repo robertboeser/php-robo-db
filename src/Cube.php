@@ -47,6 +47,22 @@ class Cube implements JsonSerializable {
         return $this->data[$name];
     }
 
+    function setDateTime($name, $value) {
+        // DateTime als UTC Timestamp speichern!
+        if(!in_array($name, $this->cols)) return false;
+        $dti = new DateTimeImmutable($value, new DateTimeZone('UTC'));
+        $this->data[$name] = $dti->format('Y-m-d\TH:i:s');
+        return true;
+    }
+
+    function getDateTime($name) {
+        // DateTime als UTC Timestamp speichern!
+        if(!in_array($name, $this->cols)) return null;
+        if(!isset($this->data[$name])) return null;
+        // append timezone indicator
+        return $this->data[$name] . 'Z';
+    }
+
     function __set($name, $value) {
         return $this->set($name, $value);
     }
@@ -57,5 +73,15 @@ class Cube implements JsonSerializable {
 
     function jsonSerialize() {
         return $this->data;
+    }
+
+    function serializeDateTimeZone($names) {
+        $copy = $this->getData();
+        foreach($names as $name) {
+            $key = array_search($name, $this->cols);
+            if(false === $key) continue;
+            $copy[$key] .= 'Z';
+        }
+        return $copy;
     }
 }

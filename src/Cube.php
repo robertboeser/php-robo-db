@@ -84,9 +84,7 @@ class Cube implements JsonSerializable {
     function serializeDateTimeZone($names) {
         $copy = $this->getData();
         foreach($names as $name) {
-            $key = array_search($name, $this->cols);
-            if(false === $key) continue;
-            if(!empty($copy[$key])) $copy[$key] .= 'Z';
+            if(!empty($copy[$name])) $copy[$name] .= 'Z';
         }
         return $copy;
     }

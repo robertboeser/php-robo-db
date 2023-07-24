@@ -34,10 +34,9 @@ class Cube implements JsonSerializable {
         return true;
     }
 
-    function __construct($table='', $info=[], $data=[]) {
+    function __construct($table='', $info=[]) {
         $this->table = $table;
         $this->initColsInfo($info);
-        $this->setData($data);
     }
 
     /*

@@ -5,6 +5,13 @@ class CubeDB {
     protected $repository;
     protected $table_cols = [];
 
+    protected function foundCube($table, $data=[]) {
+        $cols = $this->fetchTableCols($table);
+        $cube = new Cube($table, $cols);
+        $cube->setDataDB($data);
+        return $cube;
+    }
+
     function __construct($repo=null) {
         if(!$repo) $repo = new Repository();
         $this->repository = $repo;
@@ -24,7 +31,7 @@ class CubeDB {
     function findCube($table, $where='', $params=[]) {
         $res = $this->repository->findOne($table, $where, $params);
         if(!$res) return null;
-        return $this->newCube($table, $res[0]);
+        return $this->foundCube($table, $res[0]);
     }
 
     function findCubes($table, $where='', $params=[]) {
@@ -32,7 +39,7 @@ class CubeDB {
         if(!$res) return [];
         $arr = [];
         foreach($res as $r) {
-            $arr[] = $this->newCube($table, $r);
+            $arr[] = $this->foundCube($table, $r);
         }
         return $arr;
     }
@@ -40,7 +47,7 @@ class CubeDB {
     function newCube($table, $data=[]) {
         $cols = $this->fetchTableCols($table);
         $cube = new Cube($table, $cols);
-        $cube->setDataDB($data);
+        $cube->setData($data);
         return $cube;
     }
 

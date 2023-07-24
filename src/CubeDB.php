@@ -39,18 +39,20 @@ class CubeDB {
 
     function newCube($table, $data=[]) {
         $cols = $this->fetchTableCols($table);
-        return new Cube($table, $cols, $data);
+        $cube = new Cube($table, $cols);
+        $cube->setDataDB($data);
+        return $cube;
     }
 
     function addCube($cube) {
-        $id = $this->repository->add($cube->getTable(), $cube->getData());
+        $id = $this->repository->add($cube->getTable(), $cube->getDataDB());
         if(!$id) return false;
         $cube->id = $id;
         return $id;
     }
 
     function updCube($cube) {
-        return $this->repository->upd($cube->getTable(), $cube->getData());
+        return $this->repository->upd($cube->getTable(), $cube->getDataDB());
     }
 
     function delCube($cube) {

@@ -62,11 +62,21 @@ class Repository {
         return $id;
     }
 
-    function fetchTableCols($table) {
+    function fetchTableCols($table, $full=true) {
         $this->checkPlausibleTable($table);
         $this->queryWriter->setTable($table);
         $sql = $this->queryWriter->columns();
-        $res = $this->firstCol($sql);
+        $res = null;
+        if($full) {
+            $res = $this->adapter->get($sql, []);
+            array_walk($res, function(&$val, $idx) {
+                $exp = explode('(', $val['Type']);
+                $val['Type'] = $exp[0];
+                $val['Length'] = @substr($exp[1], 0, -1);
+            });
+        } else {
+            $res = $this->firstCol($sql);
+        }
         if(!$res) return [];
         return $res;
     }

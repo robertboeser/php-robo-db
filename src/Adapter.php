@@ -2,6 +2,7 @@
 namespace Robo\RoboDB;
 
 use PDO;
+use PDOException;
 
 class Adapter {
     protected $cfg;
@@ -37,9 +38,15 @@ class Adapter {
         $usr = $this->cfg['user'];
         $pwd = $this->cfg['pass'];
 
-        if(!$this->pdo) {
-            $this->pdo = new PDO($dsn, $usr, $pwd);
+        try {
+            if(!$this->pdo) {
+                $this->pdo = new PDO($dsn, $usr, $pwd);
+            }
         }
+        catch(PDOException $ex) {
+            throw new CubeException('cannot connect to database');
+        }
+
         return $this->pdo;
     }
 

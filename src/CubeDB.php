@@ -58,6 +58,13 @@ class CubeDB {
         return $id;
     }
 
+    function putCube($cube) {   // add Cube with PushID
+        $id = $this->repository->add($cube->getTable(), $cube->getDataDB(), true);
+        if(!$id) return false;
+        $cube->id = $id;
+        return $id;
+    }
+
     function updCube($cube) {
         return $this->repository->upd($cube->getTable(), $cube->getDataDB());
     }

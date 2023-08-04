@@ -22,11 +22,13 @@ class Repository {
         return $this->adapter->get($sql, $params);
     }
 
-    function add($table, $data) {
+    function add($table, $data, $keepId=false) {
         $this->checkPlausibleTable($table);
         $this->queryWriter->setTable($table);
 
-        $data['id'] = $this->idProvider->genID();
+        if(!$keepId || !$data['id'])
+            $data['id'] = $this->idProvider->genID();
+
         $keys = array_keys($data);
         $vals = array_values($data);
         $sql = $this->queryWriter->insert($keys);

@@ -51,18 +51,31 @@ class CubeDB {
         return $cube;
     }
 
-    function addCube($cube) {
-        $id = $this->repository->add($cube->getTable(), $cube->getDataDB());
+    function addCube($cube, $keep_id = false) {
+        $id = $this->repository->add($cube->getTable(), $cube->getDataDB(), $keep_id);
         if(!$id) return false;
         $cube->id = $id;
         return $id;
     }
 
-    function putCube($cube) {   // add Cube with PushID
+    function putCube($cube) {   // add Cube with PushID // deprecated
         $id = $this->repository->add($cube->getTable(), $cube->getDataDB(), true);
         if(!$id) return false;
         $cube->id = $id;
         return $id;
+    }
+
+    function pushCube($cube, $need_match = []) {  // add or update
+        $id = $this->addCube($cube, true);
+        if($id) return $id;
+
+        $cub2 = $this->findCube($cube->getTable(), 'id = ?', [$cube->id]);
+        $match = true;
+        foreach($need_match as $nm) {
+            if($cube->get($nm) !== $cub2->get($nm)) $match = false;
+        }
+        if(!$match) return false;
+        return $this->updCube($cube);
     }
 
     function updCube($cube) {

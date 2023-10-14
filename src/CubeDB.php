@@ -12,6 +12,17 @@ class CubeDB {
         return $cube;
     }
 
+    protected function checkMatch($cube, $need_match=[]) {
+        $match = true;
+        if($need_match) {
+            $cub2 = $this->findCube($cube->getTable(), 'id = ?', [$cube->id]);
+            foreach($need_match as $nm) {
+                if($cube->get($nm) !== $cub2->get($nm)) $match = false;
+            }
+        }
+        return $match;
+    }
+
     function __construct($repo=null) {
         if(!$repo) $repo = new Repository();
         $this->repository = $repo;
@@ -69,12 +80,7 @@ class CubeDB {
         $id = $this->addCube($cube, true);
         if($id) return $id;
 
-        $cub2 = $this->findCube($cube->getTable(), 'id = ?', [$cube->id]);
-        $match = true;
-        foreach($need_match as $nm) {
-            if($cube->get($nm) !== $cub2->get($nm)) $match = false;
-        }
-        if(!$match) return false;
+        if(!$this->checkMatch($cube, $need_match)) return false;
         return $this->updCube($cube);
     }
 
@@ -82,7 +88,8 @@ class CubeDB {
         return $this->repository->upd($cube->getTable(), $cube->getDataDB());
     }
 
-    function delCube($cube) {
+    function delCube($cube, $need_match = []) {
+        if(!$this->checkMatch($cube, $need_match)) return false;
         return $this->repository->del($cube->getTable(), $cube->id);
     }
 

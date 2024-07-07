@@ -194,7 +194,7 @@ class Cube implements JsonSerializable {
         return $this->get($name);
     }
 
-    function jsonSerialize() {
+    function jsonSerialize(): mixed {
         return $this->getData();
     }
 }
